@@ -51,7 +51,7 @@ $(function() {
     });
     
     
-    $('.close-popup').on('click', function() {
+    $('.close-popup, .popup__area').on('click', function() {
         $('.popup').fadeOut(400);
         $('body').removeClass('no-scroll');
     });
