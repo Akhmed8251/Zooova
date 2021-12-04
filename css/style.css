@@ -6,7 +6,6 @@
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-:focus,:active{outline: none;}
 a:focus,a:active{outline: none;}
 nav,footer,header,aside{display: block;}
 html,body{
@@ -40,6 +39,16 @@ body {
     font-weight: 400;
     overflow-x: hidden;
 }
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	border: 0;
+	clip: rect(0 0 0 0);
+}
 .container {
     max-width: 1230px;
     padding: 0 15px;
@@ -51,6 +60,15 @@ body {
 	font-size: 46px;
 	line-height: 1.3;
 	letter-spacing: 0.02em;
+}
+.btn {
+	display: inline-block;
+	padding: 13px 42px;
+	color: #fff;
+	background-color: #961914;
+	border-radius: 8px;
+	font-weight: 600;
+	transition: .3s;
 }
 .header {
 	position: fixed;
@@ -74,6 +92,8 @@ body {
 	z-index: 5;
 	width: 80px;
 	height: 80px;
+	margin-right: 20px;
+	flex-shrink: 0;
 }
 .header__wrapper {
 	display: flex;
@@ -87,11 +107,12 @@ body {
 }
 .menu__list {
 	display: flex;
+	flex-wrap: wrap;
 }
-.menu__item + .menu__item {
-	margin-left: 53px;
+.menu__item:not(:last-child) {
+	margin-right: 53px;
 }
-.menu__item--btn {
+.menu__btn {
 	display: none;
 }
 .menu__link {
@@ -114,7 +135,7 @@ body {
 .menu__link:hover::after {
 	width: 100%;
 }
-.section-margin {
+.section {
 	margin-bottom: 180px;
 }
 .hero {
@@ -154,15 +175,6 @@ body {
 	line-height: 1.4;
 	margin-bottom: 25px;
 	max-width: 368px;
-}
-.hero__btn {
-	display: inline-block;
-	padding: 13px 42px;
-	color: #fff;
-	background-color: #961914;
-	border-radius: 8px;
-	font-weight: 600;
-	transition: .3s;
 }
 .hero__btn:hover {
 	background-color: #75110D;
@@ -249,42 +261,36 @@ body {
 	display: inline-block;
 	width: 20px;
 	position: absolute;
+	background-repeat: no-repeat;
 	left: 0;
 	top: 13px;
 }
 .barf-system__item--meat::before {
 	background-image: url('../img/meat.svg');
 	height: 14px;
-	background-repeat: no-repeat;
 }
 .barf-system__item--subproducts::before {
 	background-image: url('../img/subproducts.svg');
 	height: 19px;
-	background-repeat: no-repeat;
 }
 .barf-system__item--bones::before {
 	background-image: url('../img/bones.svg');
 	height: 20px;
-	background-repeat: no-repeat;
 }
 .barf-system__item--nuts::before {
 	background-image: url('../img/nuts.svg');
-	background-repeat: no-repeat;
 	height: 21px;
 }
 .barf-system__item--vegetables::before {
 	background-image: url('../img/vegetables.svg');
-	background-repeat: no-repeat;
 	height: 20px;
 }
 .barf-system__item--fruits::before {
 	background-image: url('../img/fruits.svg');
-	background-repeat: no-repeat;
 	height: 18px;
 }
 .barf-system__item--liver::before {
 	background-image: url('../img/liver.svg');
-	background-repeat: no-repeat;
 	height: 15px;
 }
 .rations {
@@ -396,16 +402,6 @@ body {
 	max-width: 705px;
 	color: #000000;
 }
-.calculate-banner__btn {
-	padding: 13px 42px;
-	background-color: #961914;
-	font-weight: 600;
-	font-size: 16px;
-	line-height: 1.4;
-	border-radius: 8px;
-	color: #FFFFFF;
-	transition: .3s;
-}
 .calculate-banner__btn:hover {
 	background-color: #75110D;
 }
@@ -431,8 +427,6 @@ body {
     top: 39px;
 }
 .what-list {
-	/* display: flex;
-	justify-content: space-between; */
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 }
@@ -452,8 +446,29 @@ body {
 	line-height: 1.4;
 	color: #000000;
 }
+
+.what-list__item::before {
+	content: '';
+	background-repeat: no-repeat;
+	width: 40px;
+	height: 40px;
+	display: block;
+	margin-bottom: 16px;
+}
+.what-list__item--leaf::before {
+	background-image: url('../img/leaf.svg');
+}
+.what-list__item--heart::before {
+	background-image: url('../img/heartbeat.svg');
+}
+.what-list__item--rocket::before {
+	background-image: url('../img/rocket-launch.svg');
+}
 .what-list__item--smile {
 	position: relative;
+}
+.what-list__item--smile::before {
+	background-image: url('../img/smiley.svg');
 }
 .what-list__item--smile::after {
 	content: '';
@@ -479,7 +494,6 @@ body {
 	margin-top: 80px;
 	display: block;
 	flex: 1 1 566px;
-	/* min-height: 745px; */
 	margin-right: 100px;
 }
 .care__images::before {
@@ -564,10 +578,20 @@ body {
 	font-size: 16px;
 	line-height: 1.4;
 	color: #000000;
+	position: relative;
 }
-/* .how-item + .how-item {
-	margin-left: 24px;
-} */
+/* .how-item:nth-child(1)::before {
+	content: '';
+	background: url('../img/box.svg') left top, url('../img/how-arrow.svg') right top;
+	background-size: 40px, 140px 16px;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+.how-item:nth-child(1)::after { */
+
+
 .how-item--lines {
 	position: relative;
 }
@@ -615,6 +639,9 @@ body {
 }
 .faq__list {
 	flex-basis: 65%;
+}
+.faq-item {
+	cursor: pointer;
 }
 .faq-item:not(:first-child) {
 	padding-top: 32px;
@@ -884,6 +911,9 @@ body {
 	display: flex;
 	justify-content: space-between;
 	padding: 30px 0;
+}
+.footer__inner a {
+	color: inherit;
 }
 .popup {
 	position: fixed;
@@ -1326,7 +1356,7 @@ body {
 }
 
 @media (max-width: 1024px) {
-	.section-margin {
+	.section {
 		margin-bottom: 80px;
 	}
 	.care {
@@ -1346,6 +1376,10 @@ body {
 	}
 	.care__images::before {
 		left: -34px;
+	}
+	.contacts__inner {
+		background-position: 195px 115px, 222px 232px;
+		background-size: 110px;
 	}
 }
 
@@ -1371,9 +1405,7 @@ body {
 	}
 	.menu__icon {
         display: block;
-        position: absolute;
-        top: 24px;
-        right: 30px;
+        position: relative;
         width: 30px;
         height: 18px;
         cursor: pointer;
@@ -1428,10 +1460,15 @@ body {
     }
     .menu__body--active {
         transform: translate3d(0px, 0px, 0px);
+        text-align: center;
     }
-	.menu__item--btn {
+	.menu__btn {
 		display: inline-block;
-		margin-bottom: 47px;
+		margin-top: 53px;
+		margin-left: 25px;
+	}
+	.menu__btn:hover {
+		background-color: #75110D;
 	}
     .menu__body--active .menu__list {
         flex-direction: column;
@@ -1440,6 +1477,7 @@ body {
     }
     .menu__body--active .menu__item:not(:last-child) {
         margin-bottom: 24px;
+		margin-right: 0;
     }
 	.menu__body--active .menu__item:not(:first-child) {
 		margin-left: 0;
@@ -1448,10 +1486,6 @@ body {
 		font-weight: 600;
 		font-size: 24px;
 		color: #000;
-	}
-	.menu__body--active .menu__item--btn .menu__link {
-		font-size: 16px;
-		color: #fff;
 	}
 	.popup-calculate__header {
 		flex-direction: column;
@@ -1496,7 +1530,6 @@ body {
 		flex-direction: column;
 		padding-bottom: 242px;
 		background-position: 195px 115px, 195px 361px;
-		background-size: 110px;
 	}
 	.popup-rations .popup__inner {
 		flex-direction: column;
@@ -1623,7 +1656,7 @@ body {
 	}
 	.barf-system__item,
 	.barf-system__item:nth-child(even) {
-		margin: 0 auto;
+		margin: 0;
 	} 
 	.barf-system__slider .slick-dots {
 		display: flex;

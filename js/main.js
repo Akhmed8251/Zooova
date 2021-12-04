@@ -1,8 +1,8 @@
 $(function() {
-    $('.faq-item__control').on('click', function() {
-        $(this).toggleClass('active');
-        $(this).next().slideToggle('200');
-    })
+    $('.faq-item').on('click', function() {
+        $(this).find('.faq-item__control').toggleClass('active');
+        $(this).find('.faq-item__text').slideToggle('200');
+    });
     
     $('.agreement-style').styler();
     $('.weights-style').styler();
@@ -11,8 +11,7 @@ $(function() {
     $('.menu__icon').on('click', function() {
         $(this).toggleClass('menu__icon--active');
         $(this).next().toggleClass('menu__body--active');
-        $('body').toggleClass('no-scroll');
-        
+        $('body').toggleClass('no-scroll');      
     });
 
     $(window).on('scroll', function() {
@@ -115,6 +114,7 @@ $(function() {
     });  
 
     $('.rations-slider').slick({
+        accessibility: false,
         arrows: false,
         dots: false,
         infinite: false,
